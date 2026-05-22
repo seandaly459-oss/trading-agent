@@ -1,0 +1,17 @@
+{
+  "TICK": {
+    "ticker": "TICK",
+    "signal_date": "2026-01-01",
+    "signal_price": 100.00,
+    "entry_order_id": "order_id_placeholder",
+    "entry_date": "2026-01-01",
+    "entry_price": 100.00,
+    "shares": 100,
+    "shares_open": 100,
+    "stop": 95.00,
+    "t1": 110.00,
+    "ema20": 97.50,
+    "t1_hit": false,
+    "status": "open"
+  }
+}
