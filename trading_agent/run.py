@@ -144,8 +144,9 @@ def main():
     )
 
     try:
-        next_run = scheduler.get_jobs()[0].next_run_time
-        print(f"[Run] Next scheduled run: {next_run.strftime('%Y-%m-%d %H:%M %Z')}\n")
+        next_run = getattr(scheduler.get_jobs()[0], 'next_run_time', None)
+        if next_run:
+            print(f"[Run] Next scheduled run: {next_run.strftime('%Y-%m-%d %H:%M %Z')}\n")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         print("\n[Run] Scheduler stopped by user")
