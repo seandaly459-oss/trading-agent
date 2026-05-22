@@ -3,14 +3,15 @@ monitor.py
 ==========
 Intraday position monitor for the Momentum Breakout Agent.
 
-Called by run.py's scheduler every 30 minutes, 9:30 AM – 4:00 PM ET.
+Scheduling is handled by launchd (com.tradingagent.monitor.plist), which fires
+this script every 30 minutes. The script runs one check cycle and exits.
+
 Gets live prices from Alpaca (current_price on open positions) and checks
 each open position for stop loss, Target 1, and Target 2 EMA exit.
 Fires market orders and Telegram alerts on any trigger, then updates
 positions.json.
 
-Not designed to be run directly — use: python run.py
-For a one-shot manual check: python monitor.py
+Run manually for a one-shot check: python monitor.py
 """
 
 import json
@@ -44,8 +45,10 @@ POSITIONS_FILE = os.path.join(_DIR, 'positions.json')
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _in_market_hours() -> bool:
-    t = datetime.now(EASTERN)
-    clock = (t.hour, t.minute)
+    now = datetime.now(EASTERN)
+    if now.weekday() >= 5:   # Saturday=5, Sunday=6
+        return False
+    clock = (now.hour, now.minute)
     return MARKET_OPEN <= clock <= MARKET_CLOSE
 
 
