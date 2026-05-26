@@ -21,7 +21,8 @@ from pathlib import Path
 import pytz
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent / '.env', override=True)
+load_dotenv(Path.home() / '.env', override=True)           # ~/.env (primary)
+load_dotenv(Path(__file__).parent / '.env')                # project .env (fallback)
 
 try:
     import pandas_market_calendars as mcal

@@ -17,10 +17,15 @@ Run manually for a one-shot check: python monitor.py
 import json
 import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pandas as pd
 import pytz
 import yfinance as yf
+from dotenv import load_dotenv
+
+load_dotenv(Path.home() / '.env', override=True)           # ~/.env (primary)
+load_dotenv(Path(__file__).parent / '.env')                # project .env (fallback)
 
 try:
     from alpaca.trading.client import TradingClient
